@@ -14,9 +14,11 @@ public:
     String();
     String(char *tab);
     void inputString();
+    void addChar(char ch);
     char *getArray() const;
     int getSize() const;
-    friend std::ostream& operator<<(std::ostream& out, const String& string);
+    bool operator==(const String& other) const;
+    friend std::ostream& operator<<(std::ostream& out, const String& string) ;
     ~String();
 };
 
