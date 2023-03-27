@@ -4,3 +4,4 @@
 
 #include "Selector.h"
 
+Selector::Selector(const String name) : name(name) {}

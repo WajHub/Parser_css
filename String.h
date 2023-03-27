@@ -12,8 +12,8 @@ private:
     char *array;
 public:
     String();
-    String(char *tab);
-    void inputString();
+    String(char *buff,int size);
+    void inputString(char *buff, int size);
     void addChar(char ch);
     char *getArray() const;
     int getSize() const;

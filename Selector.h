@@ -6,6 +6,7 @@ class Selector {
 private:
     String name;
 public:
+    Selector(const String name);
 
 };
 

@@ -1,6 +1,7 @@
 #include <iostream>
 #include "String.h"
 #include "Selector.h"
+#include "List.h"
 using namespace std;
 
 struct Reading{
@@ -29,33 +30,39 @@ void switch_reading(Reading *reading, char ch){
 }
 
 bool special_char(char ch){
-    if(ch==',' || ch== ' ' || ch== '{' || ch=='}' || ch==';' || ch==':') return true;
+    if(ch==',' || ch== ' ' || ch== '{' || ch=='}' || ch==';' || ch==':' ||ch=='\n'||ch=='\0') return true;
     return false;
 }
 
 int main() {
+
+    char buff [128];
+    int size=0;
     String selector;
     String atr_n;
     String atr_v;
 
     char ch=' ';
     while(cin>>ch && ch!='*'){
-        cout<<ch;
-        switch_reading(&reading,ch);
         if(!special_char(ch)) {
-            if (reading.selectors) {
-                selector.addChar(ch);
-                cout<<selector<<endl;
-            } else if (reading.attribute_name) {
-                atr_n.addChar(ch);
-            } else if (reading.attribute_values) {
-                atr_v.addChar(ch);
+            buff[size]=ch;
+            size++;
+        }
+        else{
+            if (reading.selectors && ch!='}') {
+                selector.inputString(buff,size);
+            } else if (reading.attribute_name && ch!='}') {
+                atr_n.inputString(buff,size);
+            } else if (reading.attribute_values && ch!='}') {
+                atr_v.inputString(buff,size);
             }
+            switch_reading(&reading,ch);
+            size=0;
         }
     }
-    cout<<selector<<endl;
-    cout<<atr_n<<endl;
-    cout<<atr_v<<endl;
+    cout<<selector;
+    cout<<atr_v;
+    cout<<atr_n;
 
     return 0;
 }
