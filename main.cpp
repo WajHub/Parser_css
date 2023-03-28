@@ -1,4 +1,5 @@
 #include <iostream>
+#include <string.h>
 #include "String.h"
 #include "Selector.h"
 #include "List.h"
@@ -35,15 +36,17 @@ bool special_char(char ch){
 }
 
 int main() {
+    freopen("input.txt", "r", stdin);
 
     char buff [128];
+    memset(buff, '\0', sizeof(buff));
     int size=0;
     String selector;
     String atr_n;
     String atr_v;
 
     char ch=' ';
-    while(cin>>ch && ch!='*'){
+    while(cin>>ch){
         if(!special_char(ch)) {
             buff[size]=ch;
             size++;

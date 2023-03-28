@@ -31,7 +31,6 @@ public:
     }
 };
 
-
 template <typename T> class List {
 private:
     Node<T> *head;
