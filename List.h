@@ -27,7 +27,10 @@ public:
         return counter;
     }
     void print(){
-
+        cout<<"Node contais: "<<endl;
+        for(int i=0;i<counter;i++){
+            cout<<array[i];
+        }
     }
 };
 
@@ -69,6 +72,7 @@ void List<T>::push(T obj) {
 template<typename T>
 void List<T>::print() {
     cout<<"List contain: ";
+    cout<<head->print();
 
 }
 

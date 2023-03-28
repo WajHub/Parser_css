@@ -3,6 +3,8 @@
 //
 
 #include "String.h"
+#include "Selector.h"
+
 
 String::String() {
     size=1;

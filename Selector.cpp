@@ -3,5 +3,16 @@
 //
 
 #include "Selector.h"
+Selector::Selector() {
+    name = String();
+}
+String* Selector::getName() {
+    return &name;
+}
 
-Selector::Selector(const String name) : name(name) {}
+Selector::Selector(const String name) : name(name) {
+
+}
+Selector::~Selector() {
+
+}

@@ -5,6 +5,8 @@
 #include "List.h"
 using namespace std;
 
+#define LENGTH_BUFF 256
+
 struct Reading{
     bool selectors=true;
     bool attribute_name=false;
@@ -30,42 +32,71 @@ void switch_reading(Reading *reading, char ch){
     }
 }
 
-bool special_char(char ch){
-    if(ch==',' || ch== ' ' || ch== '{' || ch=='}' || ch==';' || ch==':' ||ch=='\n'||ch=='\0') return true;
-    return false;
+void delete_space(char buff[LENGTH_BUFF], int *size){
+    int i=0;
+    int amount_space_front=0;
+    int amount_space_back=0;
+    while(buff[i]==' '){
+        amount_space_front++;
+        i++;
+    }
+    i=*size-1;
+    while(buff[i]==' '){
+        amount_space_back++;
+        i--;
+    }
+    *size=*size-amount_space_front-amount_space_back;
+    for(int j=0; j<*size;j++){
+        char tmp=buff[amount_space_front+j];
+        buff[j]=tmp;
+    }
+    buff[*size]='\0';
 }
+
+void input_string(char buff[LENGTH_BUFF],String *str,char ch, int *size){
+    delete_space(buff,size);
+    str->inputString(buff,*size);
+    switch_reading(&reading,ch);
+    // NIE JESTEM PEWIEN CZY TO JEST POTRZEBNE
+    memset(buff, '\0', LENGTH_BUFF);
+    *size=0;
+}
+
 
 int main() {
     freopen("input.txt", "r", stdin);
 
-    char buff [128];
+    char buff [LENGTH_BUFF];
     memset(buff, '\0', sizeof(buff));
     int size=0;
-    String selector;
+    Selector selector;
     String atr_n;
     String atr_v;
 
     char ch=' ';
-    while(cin>>ch){
-        if(!special_char(ch)) {
-            buff[size]=ch;
-            size++;
-        }
-        else{
-            if (reading.selectors && ch!='}') {
-                selector.inputString(buff,size);
-            } else if (reading.attribute_name && ch!='}') {
-                atr_n.inputString(buff,size);
-            } else if (reading.attribute_values && ch!='}') {
-                atr_v.inputString(buff,size);
+    while(cin.get(ch)){
+        if(reading.selectors && ch!='\n') {
+            if (ch != '{' && ch!=',') buff[size++]=ch;
+            else {
+                input_string(buff,selector.getName(),ch,&size);
             }
-            switch_reading(&reading,ch);
-            size=0;
+        }
+        else if(reading.attribute_name && ch!='\n'){
+            if (ch != ':') buff[size++]=ch;
+            else {
+                input_string(buff,&atr_n,ch,&size);
+            }
+        }
+        else if(reading.attribute_values && ch!='\n'){
+            if (ch != ';' && ch!='}') buff[size++]=ch;
+            else {
+                input_string(buff,&atr_v,ch,&size);
+            }
         }
     }
-    cout<<selector;
-    cout<<atr_v;
+    cout<<*selector.getName();
     cout<<atr_n;
+    cout<<atr_v;
 
     return 0;
 }
