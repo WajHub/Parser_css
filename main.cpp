@@ -2,6 +2,7 @@
 #include <string.h>
 #include "String.h"
 #include "Selector.h"
+#include "Attribute.h"
 #include "List.h"
 using namespace std;
 
@@ -70,8 +71,7 @@ int main() {
     memset(buff, '\0', sizeof(buff));
     int size=0;
     Selector selector;
-    String atr_n;
-    String atr_v;
+    Attribute attribute;
 
     char ch=' ';
     while(cin.get(ch)){
@@ -84,19 +84,18 @@ int main() {
         else if(reading.attribute_name && ch!='\n'){
             if (ch != ':') buff[size++]=ch;
             else {
-                input_string(buff,&atr_n,ch,&size);
+                input_string(buff,attribute.getName(),ch,&size);
             }
         }
         else if(reading.attribute_values && ch!='\n'){
             if (ch != ';' && ch!='}') buff[size++]=ch;
             else {
-                input_string(buff,&atr_v,ch,&size);
+                input_string(buff,attribute.getValue(),ch,&size);
             }
         }
     }
-    cout<<*selector.getName();
-    cout<<atr_n;
-    cout<<atr_v;
+    cout<<selector;
+    cout<<attribute;
 
     return 0;
 }

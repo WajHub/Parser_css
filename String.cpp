@@ -67,10 +67,6 @@ int String::getSize() const {
     return size;
 }
 
-String::~String() {
-    delete [] array;
-}
-
 std::ostream& operator<<(std::ostream& out, const String& string)
 {
     for(int i=0;i<string.size;i++) {
@@ -89,6 +85,9 @@ bool String::operator==(const String &other) const {
         return true;
     }
     return false;
+}
+String::~String() {
+    delete [] array;
 }
 
 

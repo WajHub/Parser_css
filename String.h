@@ -18,7 +18,7 @@ public:
     char *getArray() const;
     int getSize() const;
     bool operator==(const String& other) const;
-    friend std::ostream& operator<<(std::ostream& out, const String& string) ;
+    friend std::ostream& operator<<(std::ostream& out, const String& string);
     ~String();
 };
 
