@@ -30,7 +30,7 @@ private:
             next= nullptr;
             prev= nullptr;
         }
-        void add(const T obj){
+        void add(T &obj){
             if(counter<LENGTH) {
                    array[counter++]=obj;
             }
@@ -44,6 +44,10 @@ private:
                 cout<<"    "<<i+1<<". "<<array[i]<<endl;
             }
         }
+        ~Node(){
+            next= nullptr;
+            prev= nullptr;
+        }
     };
     Node *head;
     Node *tail;
@@ -51,6 +55,7 @@ public:
     List();
     void push(T &obj);
     void print();
+    ~List();
 };
 
 template<typename T>
@@ -66,22 +71,35 @@ void List<T>::push(T &obj) {
         head = n;
         tail = head;
     }
-//    else if(tail->getCounter()<LENGTH){
-//       tail->add(obj);
-//    }
-//    else{
-//        Node*n = new Node();
-//        n->add(obj);
-//        tail->next=n;
-//        n->prev=tail;
-//        tail=n;
-//    }
+    else if(tail->getCounter()<LENGTH){
+       tail->add(obj);
+    }
+    else{
+        Node*n = new Node(obj);
+        tail->next=n;
+        n->prev=tail;
+        tail=n;
+    }
 }
 
 template<typename T>
 void List<T>::print() {
-    cout<<"List contain: "<<endl;
-    head->print();
+    Node *tmp = head;
+    while(tmp!= nullptr) {
+        cout << "List contain: " << endl;
+        tmp->print();
+        tmp=tmp->next;
+    }
+}
+
+template<typename T>
+List<T>::~List() {
+    Node *current = head;
+    while (current != nullptr) {
+        Node *temp = current;
+        current = current->next;
+        delete temp;
+    }
 }
 
 

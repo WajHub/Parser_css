@@ -47,9 +47,11 @@ void delete_space(char buff[LENGTH_BUFF], int *size){
         i--;
     }
     *size=*size-amount_space_front-amount_space_back;
-    for(int j=0; j<*size;j++){
-        char tmp=buff[amount_space_front+j];
-        buff[j]=tmp;
+    if(amount_space_front!=0 || amount_space_back!=0) {
+        for (int j = 0; j < *size; j++) {
+            char tmp = buff[amount_space_front + j];
+            buff[j] = tmp;
+        }
     }
     buff[*size]='\0';
 }
@@ -71,6 +73,7 @@ int main() {
     memset(buff, '\0', sizeof(buff));
     int size=0;
     List<Selector> list_selector;
+    List<Attribute> list_attribute;
     Selector selector;
     Attribute attribute;
 
@@ -80,25 +83,26 @@ int main() {
             if (ch != '{' && ch!=',') buff[size++]=ch;
             else {
                 input_string(buff,selector.getName(),ch,&size);
+                list_selector.push(selector);
+//                cout<<selector;
             }
         }
         else if(reading.attribute_name && ch!='\n'){
-            if (ch != ':') buff[size++]=ch;
-            else {
-                input_string(buff,attribute.getName(),ch,&size);
-            }
+            if (ch != ':' && ch!='}') buff[size++]=ch;
+            else if(ch!='}') input_string(buff,attribute.getName(),ch,&size);
+            else switch_reading(&reading, ch);
         }
         else if(reading.attribute_values && ch!='\n'){
             if (ch != ';' && ch!='}') buff[size++]=ch;
             else {
                 input_string(buff,attribute.getValue(),ch,&size);
+                list_attribute.push(attribute);
+//                cout<<attribute;
             }
         }
     }
-    list_selector.push(selector);
-    cout<<selector;
-    cout<<attribute;
     list_selector.print();
+    list_attribute.print();
 
     return 0;
 }
