@@ -8,39 +8,48 @@ using namespace std;
 #define PARSER_CSS_LIST_H
 
 #define LENGTH  8
-template <typename T>
-class Node {
-    T array[LENGTH];
-    int counter;
-public:
-    Node<T> *next;
-    Node<T> *prev;
-    Node(){
-        counter=0;
-        next= nullptr;
-        prev= nullptr;
-    }
-    void add(T obj){
-        if(counter<LENGTH) array[counter++]=obj;
-    }
-    int getCounter(){
-        return counter;
-    }
-    void print(){
-        cout<<"Node contais: "<<endl;
-        for(int i=0;i<counter;i++){
-            cout<<array[i];
-        }
-    }
-};
 
-template <typename T> class List {
+template <typename T>
+class List {
 private:
-    Node<T> *head;
-    Node<T> *tail;
+    class Node {
+    public:
+        T array[LENGTH];
+        int counter;
+        Node *next;
+        Node *prev;
+        Node(){
+            counter=0;
+            array[counter++]=T();
+            next= nullptr;
+            prev= nullptr;
+        }
+        Node(T &obj){
+            counter=0;
+            array[counter++]=obj;
+            next= nullptr;
+            prev= nullptr;
+        }
+        void add(const T obj){
+            if(counter<LENGTH) {
+                   array[counter++]=obj;
+            }
+        }
+        int getCounter(){
+            return counter;
+        }
+        void print(){
+            cout<<"  Node contais: "<<endl;
+            for(int i=0;i<counter;i++){
+                cout<<"    "<<i+1<<". "<<array[i]<<endl;
+            }
+        }
+    };
+    Node *head;
+    Node *tail;
 public:
     List();
-    void push(T obj);
+    void push(T &obj);
     void print();
 };
 
@@ -51,29 +60,29 @@ List<T>::List() {
 }
 
 template<typename T>
-void List<T>::push(T obj) {
+void List<T>::push(T &obj) {
     if(head == nullptr) {
-        head = new Node<T>();
-        head->add(obj);
+        Node *n = new Node(obj);
+        head = n;
         tail = head;
     }
-    else if(tail->getCounter()<LENGTH){
-        tail->add(obj);
-    }
-    else{
-        Node<T>*n = new Node<T>();
-        n->add(obj);
-        tail->next=n;
-        n->prev=tail;
-        tail=n;
-    }
+//    else if(tail->getCounter()<LENGTH){
+//       tail->add(obj);
+//    }
+//    else{
+//        Node*n = new Node();
+//        n->add(obj);
+//        tail->next=n;
+//        n->prev=tail;
+//        tail=n;
+//    }
 }
 
 template<typename T>
 void List<T>::print() {
-    cout<<"List contain: ";
-    cout<<head->print();
-
+    cout<<"List contain: "<<endl;
+    head->print();
 }
+
 
 #endif //PARSER_CSS_LIST_H

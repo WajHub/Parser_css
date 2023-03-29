@@ -13,11 +13,12 @@ private:
 public:
     String();
     String(char *buff,int size);
-    void inputString(char *buff, int size);
     void addChar(char ch);
+    void inputString(char *buff, int size);
     char *getArray() const;
     int getSize() const;
     bool operator==(const String& other) const;
+    String& operator=(const String& other);
     friend std::ostream& operator<<(std::ostream& out, const String& string);
     ~String();
 };

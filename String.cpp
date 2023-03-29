@@ -3,7 +3,6 @@
 //
 
 #include "String.h"
-#include "Selector.h"
 
 
 String::String() {
@@ -13,34 +12,20 @@ String::String() {
 }
 
 String::String(char *buff, int size) {
-    this->size=size;
+    delete [] array;
+    this->size=size+1;
     if(buff == nullptr) {
         size = 0;
         array = new char[1];
         array[0] = '\0';
     }
     else {
-        array = new char[size+1];
+        array = new char[size];
         for (int i = 0; i < size; i++) {
             array[i] = buff[i];
         }
     }
-    array[size]='\0';
-}
-void String::inputString(char *buff, int size) {
-    this->size=size;
-    if(buff == nullptr) {
-        size = 0;
-        array = new char[1];
-        array[0] = '\0';
-    }
-    else {
-        array = new char[size+1];
-        for (int i = 0; i < size; i++) {
-            array[i] = buff[i];
-        }
-    }
-    array[size]='\0';
+    array[this->size-1]='\0';
 }
 
 void String::addChar(char ch) {
@@ -58,10 +43,26 @@ void String::addChar(char ch) {
     array[size-1] ='\0';
 }
 
+void String::inputString(char *buff, int size) {
+    delete [] array;
+    this->size=size+1;
+    if(buff == nullptr) {
+        size = 0;
+        array = new char[1];
+        array[0] = '\0';
+    }
+    else {
+        array = new char[size];
+        for (int i = 0; i < size; i++) {
+            array[i] = buff[i];
+        }
+    }
+    array[this->size-1]='\0';
+}
+
 char *String::getArray() const {
     return array;
 }
-
 
 int String::getSize() const {
     return size;
@@ -86,8 +87,23 @@ bool String::operator==(const String &other) const {
     }
     return false;
 }
+
+String &String::operator=(const String &other) {
+    delete[] array;
+    size = other.size;
+    array = new char[size];
+    for (int i = 0; i < size; i++)
+    {
+        array[i] = other.array[i];
+    }
+    array[size-1] = '\0';
+    return *this;
+}
+
 String::~String() {
-    delete [] array;
+    if (array != nullptr) {
+        delete[] array;
+    }
 }
 
 

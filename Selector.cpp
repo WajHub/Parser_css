@@ -14,7 +14,6 @@ String* Selector::getName() {
     return &name;
 }
 Selector::~Selector() {
-    delete &name;
 }
 
 std::ostream &operator<<(std::ostream &out, const Selector &selector) {

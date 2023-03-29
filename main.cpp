@@ -70,6 +70,7 @@ int main() {
     char buff [LENGTH_BUFF];
     memset(buff, '\0', sizeof(buff));
     int size=0;
+    List<Selector> list_selector;
     Selector selector;
     Attribute attribute;
 
@@ -94,8 +95,10 @@ int main() {
             }
         }
     }
+    list_selector.push(selector);
     cout<<selector;
     cout<<attribute;
+    list_selector.print();
 
     return 0;
 }

@@ -29,7 +29,5 @@ std::ostream &operator<<(std::ostream &out, const Attribute &attribute) {
 }
 
 Attribute::~Attribute() {
-    delete &name;
-    delete &value;
 }
 
