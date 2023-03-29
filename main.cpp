@@ -4,6 +4,7 @@
 #include "Selector.h"
 #include "Attribute.h"
 #include "List.h"
+#include "Section.h"
 using namespace std;
 
 #define LENGTH_BUFF 256
@@ -60,7 +61,6 @@ void input_string(char buff[LENGTH_BUFF],String *str,char ch, int *size){
     delete_space(buff,size);
     str->inputString(buff,*size);
     switch_reading(&reading,ch);
-    // NIE JESTEM PEWIEN CZY TO JEST POTRZEBNE
     memset(buff, '\0', LENGTH_BUFF);
     *size=0;
 }
@@ -76,6 +76,7 @@ int main() {
     List<Attribute> list_attribute;
     Selector selector;
     Attribute attribute;
+
 
     char ch=' ';
     while(cin.get(ch)){

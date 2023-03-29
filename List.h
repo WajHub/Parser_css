@@ -1,6 +1,7 @@
 //
 // Created by huber on 23.03.2023.
 //
+#pragma once
 #include <iostream>
 using namespace std;
 

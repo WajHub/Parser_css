@@ -11,21 +11,13 @@ String::String() {
     array[0]='\0';
 }
 
-String::String(char *buff, int size) {
-    delete [] array;
-    this->size=size+1;
-    if(buff == nullptr) {
-        size = 0;
-        array = new char[1];
-        array[0] = '\0';
+String::String(const String &other) {
+    size = other.size;
+    array = new char[size];
+    for (int i = 0; i < size; i++) {
+        array[i] = other.array[i];
     }
-    else {
-        array = new char[size];
-        for (int i = 0; i < size; i++) {
-            array[i] = buff[i];
-        }
-    }
-    array[this->size-1]='\0';
+    array[size-1] = '\0';
 }
 
 void String::addChar(char ch) {
@@ -43,8 +35,10 @@ void String::addChar(char ch) {
     array[size-1] ='\0';
 }
 
-void String::inputString(char *buff, int size) {
-    delete [] array;
+void String::inputString(char buff[LENGTH_BUFF], int size) {
+    if(array!= nullptr){
+        delete [] array;
+    }
     this->size=size+1;
     if(buff == nullptr) {
         size = 0;
@@ -52,7 +46,7 @@ void String::inputString(char *buff, int size) {
         array[0] = '\0';
     }
     else {
-        array = new char[size];
+        array = new char[this->size];
         for (int i = 0; i < size; i++) {
             array[i] = buff[i];
         }
@@ -89,14 +83,15 @@ bool String::operator==(const String &other) const {
 }
 
 String &String::operator=(const String &other) {
-    delete[] array;
-    size = other.size;
-    array = new char[size];
-    for (int i = 0; i < size; i++)
-    {
-        array[i] = other.array[i];
+    if(this != &other) {
+        delete[] array;
+        size = other.size;
+        array = new char[size];
+        for (int i = 0; i < size; i++) {
+            array[i] = other.array[i];
+        }
+        array[size - 1] = '\0';
     }
-    array[size-1] = '\0';
     return *this;
 }
 
