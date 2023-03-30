@@ -12,6 +12,8 @@ struct Reading{
     bool selectors=true;
     bool attribute_name=false;
     bool attribute_values=false;
+    bool css=true;
+    bool commands=false;
 }reading;
 
 void switch_reading(Reading &reading, char ch){
@@ -111,7 +113,33 @@ int main() {
     char ch=' ';
 
     while(cin.get(ch)){
-        load_data(buff,ch,size,selector,attribute,section,sections);
+        if(reading.css) {
+            if(ch=='?'){
+                reading.css=false;
+                reading.commands=true;
+                for(int i=0;i<3;i++) cin.get(ch);
+            }
+            load_data(buff,ch,size,selector,attribute,section,sections);
+        }
+        else{
+            if(ch=='*'){
+                reading.css=true;
+                reading.commands=false;
+                for(int i=0;i<3;i++) cin.get(ch);
+            }
+            else if(ch=='?'){
+
+            }
+            else if(ch=='z'){
+
+            }
+            else if(ch >= '0' && ch <= '9'){
+
+            }
+            else{
+
+            }
+        }
     }
     cout<<sections;
     return 0;

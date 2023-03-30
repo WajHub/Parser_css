@@ -55,7 +55,6 @@ private:
 public:
     List();
     void push(T &obj);
-    void print();
     friend std::ostream& operator<<(std::ostream& out, const List& list){
         typename List<T>::Node* tmp=list.head;
         while(tmp!= nullptr) {
@@ -65,10 +64,14 @@ public:
         }
         return out;
     }
+    int get_amount();
     ~List();
 };
 
-
+template<typename T>
+int List<T>::get_amount() {
+    return 0;
+}
 
 template<typename T>
 List<T>::List() {
@@ -93,17 +96,6 @@ void List<T>::push(T &obj) {
         tail=n;
     }
 }
-
-template<typename T>
-void List<T>::print() {
-    Node *tmp = head;
-    while(tmp!= nullptr) {
-        std::cout << "List contain: " << std::endl;
-        tmp->print();
-        tmp=tmp->next;
-    }
-}
-
 template<typename T>
 List<T>::~List() {
     Node *current = head;
