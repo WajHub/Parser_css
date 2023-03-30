@@ -12,10 +12,8 @@ private:
     String value;
 public:
     Attribute();
-    String getName_();
-    String *getName();
-    String getValue_();
-    String *getValue();
+    String& getName();
+    String& getValue();
     friend std::ostream& operator<<(std::ostream& out, const Attribute& attribute);
     ~Attribute();
 };

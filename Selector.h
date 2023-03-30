@@ -8,8 +8,7 @@ private:
     String name;
 public:
     Selector();
-    String getName_();
-    String* getName();
+    String& getName();
     friend std::ostream& operator<<(std::ostream& out, const Selector& selector);
     ~Selector();
 };

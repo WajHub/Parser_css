@@ -9,17 +9,11 @@ Attribute::Attribute() {
     name = String();
     value = String();
 }
-String Attribute::getName_() {
+String& Attribute::getName()  {
     return name;
 }
-String* Attribute::getName()  {
-    return &name;
-}
-String Attribute::getValue_() {
+String& Attribute::getValue()  {
     return value;
-}
-String* Attribute::getValue()  {
-    return &value;
 }
 
 std::ostream &operator<<(std::ostream &out, const Attribute &attribute) {

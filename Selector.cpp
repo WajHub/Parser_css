@@ -6,12 +6,9 @@
 Selector::Selector() {
     name = String();
 }
-String Selector::getName_() {
-    return name;
-}
 
-String* Selector::getName() {
-    return &name;
+String& Selector::getName() {
+    return name;
 }
 Selector::~Selector() {
 }
