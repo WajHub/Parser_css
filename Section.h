@@ -11,9 +11,13 @@
 class Section {
 private:
     List<Selector> selectors;
-    List<Attribute> atrributes;
+    List<Attribute> attributes;
 public:
-
+    Section();
+    void add_selector(Selector selector);
+    void add_attribute(Attribute attribute);
+    friend std::ostream& operator<<(std::ostream& out, const Section& section);
+    ~Section();
 
 };
 

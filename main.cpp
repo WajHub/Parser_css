@@ -72,10 +72,10 @@ int main() {
     char buff [LENGTH_BUFF];
     memset(buff, '\0', sizeof(buff));
     int size=0;
-    List<Selector> list_selector;
-    List<Attribute> list_attribute;
+    List<Section> sections;
     Selector selector;
     Attribute attribute;
+    Section section;
 
 
     char ch=' ';
@@ -84,26 +84,31 @@ int main() {
             if (ch != '{' && ch!=',') buff[size++]=ch;
             else {
                 input_string(buff,selector.getName(),ch,&size);
-                list_selector.push(selector);
-//                cout<<selector;
+                section.add_selector(selector);
             }
         }
         else if(reading.attribute_name && ch!='\n'){
             if (ch != ':' && ch!='}') buff[size++]=ch;
             else if(ch!='}') input_string(buff,attribute.getName(),ch,&size);
             else switch_reading(&reading, ch);
+            if(ch=='}'){
+                sections.push(section);
+                section=Section();
+            }
         }
         else if(reading.attribute_values && ch!='\n'){
             if (ch != ';' && ch!='}') buff[size++]=ch;
             else {
                 input_string(buff,attribute.getValue(),ch,&size);
-                list_attribute.push(attribute);
-//                cout<<attribute;
+                section.add_attribute(attribute);
+            }
+            if(ch=='}'){
+                sections.push(section);
+                section=Section();
             }
         }
     }
-    list_selector.print();
-    list_attribute.print();
+    cout<<sections;
 
     return 0;
 }

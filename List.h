@@ -3,7 +3,6 @@
 //
 #pragma once
 #include <iostream>
-using namespace std;
 
 #ifndef PARSER_CSS_LIST_H
 #define PARSER_CSS_LIST_H
@@ -39,11 +38,12 @@ private:
         int getCounter(){
             return counter;
         }
-        void print(){
-            cout<<"  Node contais: "<<endl;
-            for(int i=0;i<counter;i++){
-                cout<<"    "<<i+1<<". "<<array[i]<<endl;
+        friend std::ostream& operator<<(std::ostream& out, const Node& node){
+            out<<"  Node contais: "<<std::endl;
+            for(int i=0;i<node.counter;i++){
+                out<<"    "<<i+1<<". "<<node.array[i]<<std::endl;
             }
+            return out;
         }
         ~Node(){
             next= nullptr;
@@ -56,8 +56,19 @@ public:
     List();
     void push(T &obj);
     void print();
+    friend std::ostream& operator<<(std::ostream& out, const List& list){
+        typename List<T>::Node* tmp=list.head;
+        while(tmp!= nullptr) {
+            out << "List contains: " << std::endl;
+            out<<*tmp;
+            tmp=tmp->next;
+        }
+        return out;
+    }
     ~List();
 };
+
+
 
 template<typename T>
 List<T>::List() {
@@ -87,7 +98,7 @@ template<typename T>
 void List<T>::print() {
     Node *tmp = head;
     while(tmp!= nullptr) {
-        cout << "List contain: " << endl;
+        std::cout << "List contain: " << std::endl;
         tmp->print();
         tmp=tmp->next;
     }
