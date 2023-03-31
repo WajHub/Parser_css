@@ -30,3 +30,11 @@ std::ostream &operator<<(std::ostream &out, const Section &section) {
     return out;
 }
 
+List<Selector> Section::get_selectors() {
+    return selectors;
+}
+
+List<Attribute> Section::get_attributes() {
+    return attributes;
+}
+

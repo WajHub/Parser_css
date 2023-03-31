@@ -129,7 +129,8 @@ int main() {
             }
             else if(ch=='?'){
                 cout<<" == "<<sections.get_amount()<<endl;
-                cout<<" == "<<sections.exist_element(13)<<endl;
+                cout<<" == "<<sections.exist_element(1)<<endl;
+                cout<<" == "<<sections.get_element(2).get_attributes().get_amount()<<endl;
             }
             else if(ch=='z'){
 
