@@ -99,13 +99,13 @@ public:
 
     bool exist_element(int n);
 
-    T get_element(int n);
+    T& get_element(int n);
 
     ~List();
 };
 
 template<typename T>
-T List<T>::get_element(int n) {
+T& List<T>::get_element(int n) {
     Node *tmp = head;
     while (tmp != nullptr) {
         if (LENGTH < n) {

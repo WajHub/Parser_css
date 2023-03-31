@@ -128,9 +128,14 @@ int main() {
                 for(int i=0;i<3;i++) cin.get(ch);
             }
             else if(ch=='?'){
-                cout<<" == "<<sections.get_amount()<<endl;
-                cout<<" == "<<sections.exist_element(1)<<endl;
-                cout<<" == "<<sections.get_element(2).get_attributes().get_amount()<<endl;
+//                cout<<" == "<<sections.get_amount()<<endl;
+
+//                cout<<" == "<<sections.exist_element(1)<<endl;
+//                cout<<"== "<<sections.get_element(2).get_selectors().get_amount()<<endl;
+//                cout<<"== "<<sections.get_element(2).get_attributes().get_amount()<<endl;
+
+//                cout<<" == "<<sections.get_element(2).get_selectors().get_element(1);
+
             }
             else if(ch=='z'){
 

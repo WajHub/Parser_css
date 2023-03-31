@@ -9,15 +9,14 @@
 #include "List.h"
 
 class Section {
-private:
+public:
     List<Selector> selectors;
     List<Attribute> attributes;
-public:
     Section();
     void add_selector(Selector selector);
     void add_attribute(Attribute attribute);
-    List<Selector> get_selectors();
-    List<Attribute> get_attributes();
+    List<Selector>& get_selectors();
+    List<Attribute>& get_attributes();
     friend std::ostream& operator<<(std::ostream& out, const Section& section);
     ~Section();
 
