@@ -15,28 +15,45 @@ private:
     class Node {
     public:
         T array[LENGTH];
+        bool exist[LENGTH];
         int counter;
         Node *next;
         Node *prev;
         Node(){
             counter=0;
             array[counter++]=T();
+            for(int i=0;i<LENGTH;i++) exist[i]=false;
             next= nullptr;
             prev= nullptr;
         }
         Node(T &obj){
             counter=0;
+            for(int i=0;i<LENGTH;i++) exist[i]=false;
+            exist[counter]=true;
             array[counter++]=obj;
             next= nullptr;
             prev= nullptr;
         }
         void add(T &obj){
             if(counter<LENGTH) {
-                   array[counter++]=obj;
+                exist[counter]=true;
+                array[counter++]=obj;
             }
         }
         int getCounter(){
             return counter;
+        }
+        int get_amount(){
+            int z=0;
+            for(int i=0;i<LENGTH;i++) if(exist[i]) z++;
+            return z;
+        }
+        bool isEmpty(){
+            if(get_amount()==0) return true;
+            return false;
+        }
+        T get_element(int n){
+            return array[--n];
         }
         friend std::ostream& operator<<(std::ostream& out, const Node& node){
             out<<"  Node contais: "<<std::endl;
@@ -65,11 +82,46 @@ public:
         return out;
     }
     int get_amount();
+    bool exist_element(int n);
+    T get_element(int n);
     ~List();
 };
 
 template<typename T>
+T List<T>::get_element(int n) {
+    if(exist_element(n)){
+
+    }
+}
+template<typename T>
+bool List<T>::exist_element(int n) {
+    if(head!= nullptr){
+        Node *tmp = head;
+        while(tmp!= nullptr){
+            if(LENGTH < n){
+                n=n-tmp->counter;
+                tmp=tmp->next;
+            }
+            else{
+                return tmp->exist[--n];
+            }
+        }
+        return false;
+    }
+    return false;
+}
+
+template<typename T>
 int List<T>::get_amount() {
+    int amount=0;
+    if(head!= nullptr){
+        Node *tmp = head;
+        while(tmp!= nullptr){
+            amount=amount+tmp->get_amount();
+            tmp=tmp->next;
+        }
+        return amount;
+    }
     return 0;
 }
 

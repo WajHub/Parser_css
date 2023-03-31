@@ -25,3 +25,10 @@ std::ostream &operator<<(std::ostream &out, const Attribute &attribute) {
 Attribute::~Attribute() {
 }
 
+bool Attribute::isEmpty() {
+    if(name.isEmpty() && value.isEmpty()) return true;
+    return false;
+}
+
+
+

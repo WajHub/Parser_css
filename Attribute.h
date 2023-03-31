@@ -14,6 +14,7 @@ public:
     Attribute();
     String& getName();
     String& getValue();
+    bool isEmpty();
     friend std::ostream& operator<<(std::ostream& out, const Attribute& attribute);
     ~Attribute();
 };

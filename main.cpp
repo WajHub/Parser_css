@@ -128,7 +128,8 @@ int main() {
                 for(int i=0;i<3;i++) cin.get(ch);
             }
             else if(ch=='?'){
-
+                cout<<" == "<<sections.get_amount()<<endl;
+                cout<<" == "<<sections.exist_element(13)<<endl;
             }
             else if(ch=='z'){
 
@@ -141,6 +142,7 @@ int main() {
             }
         }
     }
-    cout<<sections;
+//    cout<<sections.get_amount();
+//    cout<<sections;
     return 0;
 }

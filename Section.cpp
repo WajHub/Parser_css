@@ -27,5 +27,6 @@ std::ostream &operator<<(std::ostream &out, const Section &section) {
     out<<"Section: "<<std::endl;
     out<<section.selectors<<std::endl;
     out<<section.attributes<<std::endl;
+    return out;
 }
 

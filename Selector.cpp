@@ -17,3 +17,8 @@ std::ostream &operator<<(std::ostream &out, const Selector &selector) {
     out<<"Selektor name: "<<selector.name;
     return out;
 }
+
+bool Selector::isEmpty() {
+    if(name.isEmpty()) return true;
+    return false;
+}

@@ -101,5 +101,10 @@ String::~String() {
     }
 }
 
+bool String::isEmpty() {
+    if(array[0]=='\0') return true;
+    return false;
+}
+
 
 
