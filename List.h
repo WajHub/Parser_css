@@ -4,7 +4,7 @@
 #pragma once
 
 #include <iostream>
-
+#include "String.h"
 #ifndef PARSER_CSS_LIST_H
 #define PARSER_CSS_LIST_H
 
@@ -54,16 +54,13 @@ private:
             for (int i = 0; i < LENGTH; i++) if (exist[i]) z++;
             return z;
         }
-
         bool isEmpty() {
             if (get_amount() == 0) return true;
             return false;
         }
-
         T get_element(int n) {
             return array[--n];
         }
-
         friend std::ostream &operator<<(std::ostream &out, const Node &node) {
             out << "  Node contais: " << std::endl;
             for (int i = 0; i < node.counter; i++) {
@@ -77,7 +74,6 @@ private:
             prev = nullptr;
         }
     };
-
     Node *head;
     Node *tail;
 public:
@@ -95,14 +91,24 @@ public:
         return out;
     }
 
+    Node *getHead() const {
+        return head;
+    }
+
+    Node *getTail() const {
+        return tail;
+    }
+
     int get_amount();
 
     bool exist_element(int n);
 
     T& get_element(int n);
 
+
     ~List();
 };
+
 
 template<typename T>
 T& List<T>::get_element(int n) {

@@ -38,3 +38,28 @@ List<Attribute>& Section::get_attributes() {
     return attributes;
 }
 
+bool Section::contains_attribute(String name) {
+    int x=attributes.get_amount();
+    for(int i=1;i<=x;i++){
+        if(attributes.exist_element(i)){
+            if(attributes.get_element(i).getName()==name) return true;
+        }
+    }
+    return false;
+}
+
+String Section::attribute_value(String name) {
+    if(contains_attribute(name)){
+        int x=attributes.get_amount();
+        for(int i=1;i<=x;i++){
+            if(attributes.exist_element(i)){
+                if(attributes.get_element(i).getName()==name) {
+                    return attributes.get_element(i).getValue();
+                }
+            }
+        }
+        return String();
+    }
+    return String();
+}
+

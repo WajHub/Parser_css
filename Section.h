@@ -15,6 +15,8 @@ public:
     Section();
     void add_selector(Selector selector);
     void add_attribute(Attribute attribute);
+    bool contains_attribute(String name);
+    String attribute_value(String name);
     List<Selector>& get_selectors();
     List<Attribute>& get_attributes();
     friend std::ostream& operator<<(std::ostream& out, const Section& section);
