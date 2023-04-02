@@ -118,11 +118,20 @@ int load_int(char buff[LENGTH_BUFF],int &size, char ch){
     return number;
 }
 
-int count_attribute(List<Section> &sections, String &name){
+int count_attributes(List<Section> &sections, String &name){
     int result=0;
     int amount_sections = sections.get_amount();
     for(int j=1;j<=amount_sections;j++){
-        result=result + sections.get_element(j).count_attribute(name);
+        result=result + sections.get_element(j).count_attributes(name);
+    }
+    return result;
+}
+
+int count_selectors(List<Section> &sections, String &name){
+    int result=0;
+    int amount_sections = sections.get_amount();
+    for(int j=1;j<=amount_sections;j++){
+        result=result + sections.get_element(j).count_selectors(name);
     }
     return result;
 }
@@ -213,7 +222,12 @@ int main() {
                 if(ch=='A'){
                     cin.get(ch);
                     cin.get(ch);
-                    cout<<"== "<<count_attribute(sections,name);
+                    cout<<"== "<<count_attributes(sections,name)<<endl;
+                }
+                if(ch=='S'){
+                    cin.get(ch);
+                    cin.get(ch);
+                    cout<<"== "<<count_selectors(sections,name);
                 }
             }
         }

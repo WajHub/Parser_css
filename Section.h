@@ -16,7 +16,8 @@ public:
     void add_selector(Selector selector);
     void add_attribute(Attribute attribute);
     bool contains_attribute(String name);
-    int count_attribute(String name);
+    int count_attributes(String name);
+    int count_selectors(String name);
     String attribute_value(String name);
     List<Selector>& get_selectors();
     List<Attribute>& get_attributes();
