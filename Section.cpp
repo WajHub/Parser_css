@@ -9,12 +9,6 @@ Section::Section() {
     List<Attribute> attributes=List<Attribute>();
 }
 
-
-
-Section::~Section() {
-
-}
-
 void Section::add_selector(Selector selector) {
     selectors.push(selector);
 }
@@ -92,4 +86,11 @@ int Section::count_selectors(String name) {
     return amount;
 }
 
+Section::~Section() {
 
+}
+
+bool Section::isEmpty() {
+    if(selectors.isEmpty() && attributes.isEmpty()) return true;
+    return false;
+}

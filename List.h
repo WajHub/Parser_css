@@ -57,8 +57,41 @@ private:
             if (get_amount() == 0) return true;
             return false;
         }
-        T get_element(int n) {
-            return array[--n];
+        T &get_element(int n) {
+            int tmp=n;
+            for(int i=0;i<tmp;i++){
+                if(exist[i]){
+                    n--;
+                    if(n==0) return array[i];
+                }
+                else tmp++;
+            }
+        }
+        bool exist_element(int n){
+            int tmp=n;
+            for(int i=0;i<tmp;i++){
+                if(exist[i]){
+                    n--;
+                    if(n==0) return exist[i];
+                }
+                else tmp++;
+            }
+        }
+        T& get_element_(int n){
+            for(int i=LENGTH-1;i>=0;i--){
+                if(exist[i]){
+                    n--;
+                    if(n==0) return array[i];
+                }
+            }
+        }
+        bool exist_element_(int n){
+            for(int i=LENGTH-1;i>=0;i--){
+                if(exist[i]){
+                    n--;
+                    if(n==0) return exist[i];
+                }
+            }
         }
         friend std::ostream &operator<<(std::ostream &out, const Node &node) {
             out << "  Node contais: " << std::endl;
@@ -67,7 +100,28 @@ private:
             }
             return out;
         }
-
+        void delete_all(){
+            for(int i=0;i<LENGTH;i++){
+                if(exist[i]){
+                    exist[i]=false;
+                    array[i]=T();
+                }
+            }
+        }
+        bool delete_element(int n){
+            int tmp=n;
+            for(int i=0;i<tmp;i++){
+                if(exist[i]){
+                    n--;
+                    if(n==0){
+                        array[i]=T();
+                        exist[i]= false;
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
         ~Node() {
             next = nullptr;
             prev = nullptr;
@@ -80,8 +134,12 @@ public:
 
     void push(T &obj);
 
+    bool delete_element(int n);
+
+    void delete_all();
+
     friend std::ostream &operator<<(std::ostream &out, const List &list) {
-        typename List<T>::Node *tmp = list.head;
+        Node *tmp = list.head;
         while (tmp != nullptr) {
             out << "List contains: " << std::endl;
             out << *tmp;
@@ -100,8 +158,9 @@ public:
 
     int get_amount();
 
-    bool exist_element(int n);
+    bool isEmpty();
 
+    bool exist_element(int n);
     T& get_element(int n);
 
     //funckja pobiera elementy od konca (dla komendy E)
@@ -112,15 +171,72 @@ public:
 };
 
 template<typename T>
+void List<T>::delete_all() {
+    while (head != nullptr) {
+        Node* next = head->next;
+        head->delete_all();
+        delete head;
+        head = next;
+    }
+}
+
+template<typename T>
+bool List<T>::delete_element(int n) {
+    bool result=false;
+    Node *tmp = head;
+    while (tmp != nullptr) {
+        if (tmp->counter < n) {
+            n = n - tmp->counter;
+            tmp = tmp->next;
+        } else {
+            result = tmp->delete_element(n);
+            if(tmp->isEmpty()){
+                if(tmp==head && tmp==tail) head= nullptr;
+                else if(tmp==head){
+                    tmp=head->next;
+                    head= tmp;
+                    tmp->prev= nullptr;
+                }
+                else if(tmp==tail){
+                    tmp=tail->prev;
+                    tail=tmp;
+                    tmp->next= nullptr;
+                }
+                else{
+                    Node *current=tmp->prev;
+                    current->next=tmp->next;
+                    current=tmp->next;
+                    current->prev=tmp->prev;
+                    tmp= nullptr;
+                }
+                return result;
+            }
+            else return result;
+        }
+    }
+    return result;
+}
+
+template<typename T>
+bool List<T>::isEmpty() {
+    Node *tmp=head;
+    while(tmp!= nullptr){
+        if(tmp->isEmpty())return true;
+        return false;
+    }
+    return true;
+}
+
+template<typename T>
 bool List<T>::exist_element_(int n) {
     if (tail != nullptr) {
         Node *tmp = tail;
         while (tmp != nullptr) {
-            if (LENGTH < n) {
-                n = n - LENGTH;
+            if (tmp->counter < n) {
+                n = n - tmp->counter;
                 tmp = tmp->prev;
             } else {
-                return tmp->exist[LENGTH-n];
+                return tmp->exist_element_(n);
             }
         }
         return false;
@@ -136,7 +252,7 @@ T &List<T>::get_element_(int n) {
             n = n - LENGTH;
             tmp = tmp->prev;
         } else {
-            return tmp->array[LENGTH-n];
+            return tmp->get_element_(n);
         }
     }
     return tmp->array[0];
@@ -147,11 +263,11 @@ template<typename T>
 T& List<T>::get_element(int n) {
     Node *tmp = head;
     while (tmp != nullptr) {
-        if (LENGTH < n) {
+        if (tmp->counter < n) {
             n = n - tmp->counter;
             tmp = tmp->next;
         } else {
-            return tmp->array[--n];
+            return tmp->get_element(n);
         }
     }
     return tmp->array[0];
@@ -162,18 +278,17 @@ bool List<T>::exist_element(int n) {
     if (head != nullptr) {
         Node *tmp = head;
         while (tmp != nullptr) {
-            if (LENGTH < n) {
+            if (tmp->counter < n) {
                 n = n - tmp->counter;
                 tmp = tmp->next;
             } else {
-                return tmp->exist[--n];
+                return tmp->exist_element(n);
             }
         }
         return false;
     }
     return false;
 }
-
 template<typename T>
 int List<T>::get_amount() {
     int amount = 0;

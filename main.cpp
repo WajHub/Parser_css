@@ -231,6 +231,20 @@ int main() {
                         }
                     }
                 }
+                else if(ch=='D'){
+                    cin.get(ch);
+                    cin.get(ch);
+                    if(ch=='*'){
+                        if(sections.exist_element(i)){
+                            sections.get_element(i).get_selectors().delete_all();
+                            sections.get_element(i).get_attributes().delete_all();
+                            if(sections.delete_element(i)) cout<<"== deleted";
+                        }
+                    }
+                    else{
+
+                    }
+                }
             }
             else if(ch!='\n' && ch!='\0' && ch!=' '){
                 name=String();
