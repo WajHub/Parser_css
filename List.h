@@ -76,6 +76,7 @@ private:
                 }
                 else tmp++;
             }
+            return false;
         }
         T& get_element_(int n){
             for(int i=LENGTH-1;i>=0;i--){
@@ -92,6 +93,7 @@ private:
                     if(n==0) return exist[i];
                 }
             }
+            return false;
         }
         friend std::ostream &operator<<(std::ostream &out, const Node &node) {
             out << "  Node contais: " << std::endl;
@@ -119,6 +121,7 @@ private:
                         return true;
                     }
                 }
+                else tmp++;
             }
             return false;
         }
@@ -248,8 +251,8 @@ template<typename T>
 T &List<T>::get_element_(int n) {
     Node *tmp = tail;
     while (tmp != nullptr) {
-        if (LENGTH < n) {
-            n = n - LENGTH;
+        if (tmp->counter < n) {
+            n = n - tmp->counter;
             tmp = tmp->prev;
         } else {
             return tmp->get_element_(n);

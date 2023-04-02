@@ -171,7 +171,7 @@ int main() {
     char ch=' ';
 
     while(cin.get(ch) && ch!=EOF){
-        if(reading.css) {
+        if(reading.css && ch>=' ') {
             if(ch=='?'){
                 reading.css=false;
                 reading.commands=true;
@@ -179,7 +179,7 @@ int main() {
             }
             else load_data(buff,ch,size,selector,attribute,section,sections);
         }
-        else{
+        else if(ch>=' '){
             if(ch=='*'){
                 reading.css=true;
                 reading.commands=false;
@@ -238,13 +238,13 @@ int main() {
                         if(sections.exist_element(i)){
                             sections.get_element(i).get_selectors().delete_all();
                             sections.get_element(i).get_attributes().delete_all();
-                            if(sections.delete_element(i)) cout<<"== deleted";
+                            if(sections.delete_element(i)) cout<<"== deleted"<<endl;
                         }
                     }
                     else{
                         name=String();
                         buff[size++]=ch;
-                        while(cin.get(ch) && ch!=','){
+                        while(cin.get(ch) && ch!=',' && ch!='\n' && ch!='\0'){
                             buff[size]=ch;
                             size++;
                         }
@@ -287,5 +287,6 @@ int main() {
             }
         }
     }
+    cout<<sections;
     return 0;
 }
