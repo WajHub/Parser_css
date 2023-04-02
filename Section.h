@@ -20,6 +20,7 @@ public:
     int count_attributes(String name);
     int count_selectors(String name);
     bool isEmpty();
+    bool delete_attribute(String name);
     String attribute_value(String name);
     List<Selector>& get_selectors();
     List<Attribute>& get_attributes();

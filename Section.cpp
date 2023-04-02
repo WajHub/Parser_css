@@ -55,9 +55,9 @@ String Section::attribute_value(String name) {
     if(contains_attribute(name)){
         int x=attributes.get_amount();
         for(int i=1;i<=x;i++){
-            if(attributes.exist_element(i)){
-                if(attributes.get_element(i).getName()==name) {
-                    return attributes.get_element(i).getValue();
+            if(attributes.exist_element_(i)){
+                if(attributes.get_element_(i).getName()==name) {
+                    return attributes.get_element_(i).getValue();
                 }
             }
         }

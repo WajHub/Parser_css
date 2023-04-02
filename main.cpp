@@ -242,6 +242,13 @@ int main() {
                         }
                     }
                     else{
+                        name=String();
+                        buff[size++]=ch;
+                        while(cin.get(ch) && ch!=','){
+                            buff[size]=ch;
+                            size++;
+                        }
+                        input_string(buff,name,size);
 
                     }
                 }
