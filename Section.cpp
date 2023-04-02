@@ -47,6 +47,15 @@ bool Section::contains_attribute(String name) {
     }
     return false;
 }
+bool Section::contains_selector(String name) {
+    int x=selectors.get_amount();
+    for(int i=1;i<=x;i++){
+        if(selectors.exist_element(i)){
+            if(selectors.get_element(i).getName()==name) return true;
+        }
+    }
+    return false;
+}
 
 String Section::attribute_value(String name) {
     if(contains_attribute(name)){
@@ -82,4 +91,5 @@ int Section::count_selectors(String name) {
     }
     return amount;
 }
+
 

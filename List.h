@@ -104,9 +104,43 @@ public:
 
     T& get_element(int n);
 
+    //funckja pobiera elementy od konca (dla komendy E)
+    T& get_element_(int n);
+    bool exist_element_(int n);
 
     ~List();
 };
+
+template<typename T>
+bool List<T>::exist_element_(int n) {
+    if (tail != nullptr) {
+        Node *tmp = tail;
+        while (tmp != nullptr) {
+            if (LENGTH < n) {
+                n = n - LENGTH;
+                tmp = tmp->prev;
+            } else {
+                return tmp->exist[LENGTH-n];
+            }
+        }
+        return false;
+    }
+    return false;
+}
+
+template<typename T>
+T &List<T>::get_element_(int n) {
+    Node *tmp = tail;
+    while (tmp != nullptr) {
+        if (LENGTH < n) {
+            n = n - LENGTH;
+            tmp = tmp->prev;
+        } else {
+            return tmp->array[LENGTH-n];
+        }
+    }
+    return tmp->array[0];
+}
 
 
 template<typename T>

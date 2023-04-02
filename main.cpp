@@ -122,7 +122,8 @@ int count_attributes(List<Section> &sections, String &name){
     int result=0;
     int amount_sections = sections.get_amount();
     for(int j=1;j<=amount_sections;j++){
-        result=result + sections.get_element(j).count_attributes(name);
+        if(sections.exist_element(j)) result=result + sections.get_element(j).count_attributes(name);
+        else amount_sections++;
     }
     return result;
 }
@@ -131,7 +132,26 @@ int count_selectors(List<Section> &sections, String &name){
     int result=0;
     int amount_sections = sections.get_amount();
     for(int j=1;j<=amount_sections;j++){
-        result=result + sections.get_element(j).count_selectors(name);
+        if(sections.exist_element(j)) result=result + sections.get_element(j).count_selectors(name);
+        else amount_sections++;
+    }
+    return result;
+}
+
+String get_attr_for_sel(List<Section> &sections,String &name, String &name2){
+    String result;
+    int amount_sections = sections.get_amount();
+    for(int i=1;i<=amount_sections;i++){
+        if(sections.exist_element_(i)){
+            Section &section = sections.get_element_(i);
+            if(section.contains_selector(name)){
+                if(section.contains_attribute(name2)){
+                    result=section.attribute_value(name2);
+                    return result;
+                }
+            }
+        }
+        else amount_sections++;
     }
     return result;
 }
@@ -146,6 +166,8 @@ int main() {
     Attribute attribute;
     Section section;
     String name;
+    String name2;
+    String answer;
     char ch=' ';
 
     while(cin.get(ch) && ch!=EOF){
@@ -224,10 +246,21 @@ int main() {
                     cin.get(ch);
                     cout<<"== "<<count_attributes(sections,name)<<endl;
                 }
-                if(ch=='S'){
+                else if(ch=='S'){
                     cin.get(ch);
                     cin.get(ch);
-                    cout<<"== "<<count_selectors(sections,name);
+                    cout<<"== "<<count_selectors(sections,name)<<endl;
+                }
+                else if(ch=='E'){
+                    name2=String();
+                    cin.get(ch);
+                    while(cin.get(ch) && ch!='\n'){
+                        buff[size]=ch;
+                        size++;
+                    }
+                    input_string(buff,name2,size);
+                    answer = get_attr_for_sel(sections,name,name2);
+                    if(!answer.isEmpty()) cout<<"== "<<answer;
                 }
             }
         }
