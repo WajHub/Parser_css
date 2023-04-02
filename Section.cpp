@@ -38,6 +38,7 @@ bool Section::contains_attribute(String name) {
         if(attributes.exist_element(i)){
             if(attributes.get_element(i).getName()==name) return true;
         }
+        else x++;
     }
     return false;
 }
@@ -47,6 +48,7 @@ bool Section::contains_selector(String name) {
         if(selectors.exist_element(i)){
             if(selectors.get_element(i).getName()==name) return true;
         }
+        else x++;
     }
     return false;
 }
@@ -60,6 +62,7 @@ String Section::attribute_value(String name) {
                     return attributes.get_element_(i).getValue();
                 }
             }
+            else x++;
         }
         return String();
     }
@@ -92,5 +95,19 @@ Section::~Section() {
 
 bool Section::isEmpty() {
     if(selectors.isEmpty() && attributes.isEmpty()) return true;
+    return false;
+}
+
+bool Section::delete_attribute(String name) {
+    int x=attributes.get_amount();
+    for(int i=1;i<=x;i++){
+        if(attributes.exist_element(i)){
+            if(attributes.get_element(i).getName()==name) {
+                attributes.delete_element(i);
+                return true;
+            }
+        }
+    }
+
     return false;
 }

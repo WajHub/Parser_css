@@ -249,7 +249,8 @@ int main() {
                             size++;
                         }
                         input_string(buff,name,size);
-
+                        if(sections.get_element(i).delete_attribute(name)) cout<<"== deleted"<<endl;
+                        if(sections.get_element(i).isEmpty()) sections.delete_element(i);
                     }
                 }
             }

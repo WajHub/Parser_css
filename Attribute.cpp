@@ -35,14 +35,6 @@ bool Attribute::contains_name(String name) {
     return false;
 }
 
-bool Attribute::delete_attribute(String name) {
-    if(name== this->name){
-        this->name=String();
-        value=String();
-        return true;
-    }
-    return false;
-}
 
 
 
