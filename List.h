@@ -28,7 +28,6 @@ private:
             next = nullptr;
             prev = nullptr;
         }
-
         Node(T &obj) {
             counter = 0;
             for (int i = 0; i < LENGTH; i++) exist[i] = false;
@@ -37,18 +36,18 @@ private:
             next = nullptr;
             prev = nullptr;
         }
-
         void add(T &obj) {
             if (counter < LENGTH) {
                 exist[counter] = true;
                 array[counter++] = obj;
             }
         }
-
         int getCounter() {
             return counter;
         }
-
+        const T *getArray() const {
+            return array;
+        }
         int get_amount() {
             int z = 0;
             for (int i = 0; i < LENGTH; i++) if (exist[i]) z++;

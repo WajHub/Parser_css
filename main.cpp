@@ -118,6 +118,14 @@ int load_int(char buff[LENGTH_BUFF],int &size, char ch){
     return number;
 }
 
+int count_attribute(List<Section> &sections, String &name){
+    int result=0;
+    int amount_sections = sections.get_amount();
+    for(int j=1;j<=amount_sections;j++){
+        result=result + sections.get_element(j).count_attribute(name);
+    }
+    return result;
+}
 
 int main() {
     freopen("input.txt", "r", stdin);
@@ -128,9 +136,10 @@ int main() {
     Selector selector;
     Attribute attribute;
     Section section;
+    String name;
     char ch=' ';
 
-    while(cin.get(ch)){
+    while(cin.get(ch) && ch!=EOF){
         if(reading.css) {
             if(ch=='?'){
                 reading.css=false;
@@ -147,9 +156,6 @@ int main() {
             }
             else if(ch=='?'){
                 cout<<"== "<<sections.get_amount()<<endl;
-            }
-            else if(ch=='z'){
-
             }
             else if(ch >= '0' && ch <= '9'){
                 int i = load_int(buff,size,ch);
@@ -169,7 +175,6 @@ int main() {
                                 cout<<"== "<<sections.get_element(i).get_selectors().get_element(j);
                             }
                         }
-
                     }
                 }
                 else if(ch=='A'){
@@ -181,7 +186,7 @@ int main() {
                         }
                     }
                     else{
-                        String name;
+                        name=String();
                         buff[size++]=ch;
                         while(cin.get(ch) && ch!='\0' && ch!='\n'){
                             buff[size]=ch;
@@ -195,12 +200,23 @@ int main() {
                         }
                     }
                 }
-
-
+            }
+            else if(ch!='\n' && ch!='\0' && ch!=' '){
+                name=String();
+                buff[size++]=ch;
+                while(cin.get(ch) && ch!=','){
+                    buff[size]=ch;
+                    size++;
+                }
+                input_string(buff,name,size);
+                cin.get(ch);
+                if(ch=='A'){
+                    cin.get(ch);
+                    cin.get(ch);
+                    cout<<"== "<<count_attribute(sections,name);
+                }
             }
         }
     }
-//    cout<<sections.get_amount();
-//    cout<<sections;
     return 0;
 }
