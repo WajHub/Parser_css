@@ -94,7 +94,7 @@ Section::~Section() {
 }
 
 bool Section::isEmpty() {
-    if(selectors.isEmpty() || attributes.isEmpty()) return true;
+    if( attributes.isEmpty()) return true;
     return false;
 }
 
@@ -110,4 +110,15 @@ bool Section::delete_attribute(String name) {
     }
 
     return false;
+}
+
+int Section::index_attribute(String name) {
+    int x=attributes.get_amount();
+    for(int i=1;i<=x;i++){
+        if(attributes.exist_element(i)){
+            if(attributes.get_element(i).getName()==name) return i;
+        }
+        else x++;
+    }
+    return 0;
 }

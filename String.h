@@ -16,7 +16,6 @@ public:
     String();
 //    String(char *buff,int size);
     String(const String &other);
-    void addChar(char ch);
     void inputString(char buff[LENGTH_BUFF], int size);
     char *getArray() const;
     int getSize() const;

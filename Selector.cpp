@@ -14,7 +14,7 @@ Selector::~Selector() {
 }
 
 std::ostream &operator<<(std::ostream &out, const Selector &selector) {
-    out<<"Selektor name: "<<selector.name;
+    out<<selector.name;
     return out;
 }
 

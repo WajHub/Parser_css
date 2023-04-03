@@ -23,6 +23,7 @@ std::ostream &operator<<(std::ostream &out, const Attribute &attribute) {
 }
 
 Attribute::~Attribute() {
+
 }
 
 bool Attribute::isEmpty() {

@@ -20,21 +20,6 @@ String::String(const String &other) {
     array[size-1] = '\0';
 }
 
-void String::addChar(char ch) {
-    char tmp[size];
-    for(int i=0;i<size;i++){
-        tmp[i]=array[i];
-    }
-    size++;
-    delete [] array;
-    array = new char [size];
-    for(int i=0;i<size-1;i++){
-        array[i]=tmp[i];
-    }
-    array[size-2]=ch;
-    array[size-1] ='\0';
-}
-
 void String::inputString(char buff[LENGTH_BUFF], int size) {
     if(array!= nullptr){
         delete [] array;
@@ -64,10 +49,9 @@ int String::getSize() const {
 
 std::ostream& operator<<(std::ostream& out, const String& string)
 {
-    for(int i=0;i<string.size;i++) {
+    for(int i=0;i<string.size-1;i++) {
         out << string.array[i];
     }
-    out<<std::endl;
     return out;
 }
 

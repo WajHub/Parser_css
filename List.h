@@ -50,7 +50,7 @@ private:
         }
         int get_amount() {
             int z = 0;
-            for (int i = 0; i < LENGTH; i++) if (exist[i]) z++;
+            for (int i = 0; i < LENGTH; i++) if(exist[i]) z++;
             return z;
         }
         bool isEmpty() {
@@ -66,10 +66,12 @@ private:
                 }
                 else tmp++;
             }
+            return array[0];
         }
         bool exist_element(int n){
             int tmp=n;
             for(int i=0;i<tmp;i++){
+                if(i==LENGTH) return false;
                 if(exist[i]){
                     n--;
                     if(n==0) return exist[i];
@@ -85,6 +87,7 @@ private:
                     if(n==0) return array[i];
                 }
             }
+            return array[LENGTH-1];
         }
         bool exist_element_(int n){
             for(int i=LENGTH-1;i>=0;i--){
@@ -98,7 +101,9 @@ private:
         friend std::ostream &operator<<(std::ostream &out, const Node &node) {
             out << "  Node contais: " << std::endl;
             for (int i = 0; i < node.counter; i++) {
-                out << "    " << i + 1 << ". " << node.array[i] << std::endl;
+                if(node.exist[i]) {
+                    out << "    " << i + 1 << ". " << node.array[i] << std::endl;
+                }
             }
             return out;
         }
@@ -106,7 +111,7 @@ private:
             for(int i=0;i<LENGTH;i++){
                 if(exist[i]){
                     exist[i]=false;
-                    array[i]=T();
+                    array[i] = T();
                 }
             }
         }
@@ -126,8 +131,7 @@ private:
             return false;
         }
         ~Node() {
-            next = nullptr;
-            prev = nullptr;
+
         }
     };
     Node *head;
@@ -170,8 +174,10 @@ public:
     T& get_element_(int n);
     bool exist_element_(int n);
 
+
     ~List();
 };
+
 
 template<typename T>
 void List<T>::delete_all() {
@@ -193,28 +199,7 @@ bool List<T>::delete_element(int n) {
             tmp = tmp->next;
         } else {
             result = tmp->delete_element(n);
-            if(tmp->isEmpty()){
-                if(tmp==head && tmp==tail) head= nullptr;
-                else if(tmp==head){
-                    tmp=head->next;
-                    head= tmp;
-                    tmp->prev= nullptr;
-                }
-                else if(tmp==tail){
-                    tmp=tail->prev;
-                    tail=tmp;
-                    tmp->next= nullptr;
-                }
-                else{
-                    Node *current=tmp->prev;
-                    current->next=tmp->next;
-                    current=tmp->next;
-                    current->prev=tmp->prev;
-                    tmp= nullptr;
-                }
-                return result;
-            }
-            else return result;
+            return result;
         }
     }
     return result;
@@ -330,12 +315,7 @@ void List<T>::push(T &obj) {
 
 template<typename T>
 List<T>::~List() {
-    Node *current = head;
-    while (current != nullptr) {
-        Node *temp = current;
-        current = current->next;
-        delete temp;
-    }
+    delete_all();
 }
 
 
