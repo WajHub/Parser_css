@@ -117,7 +117,7 @@ private:
         }
         bool delete_element(int n){
             int tmp=n;
-            for(int i=0;i<tmp;i++){
+            for(int i=0;i<LENGTH;i++){
                 if(exist[i]){
                     n--;
                     if(n==0){
@@ -195,7 +195,7 @@ bool List<T>::delete_element(int n) {
     Node *tmp = head;
     while (tmp != nullptr) {
         if (tmp->counter < n) {
-            n = n - tmp->counter;
+            n = n - tmp->get_amount();
             tmp = tmp->next;
         } else {
             result = tmp->delete_element(n);
@@ -252,7 +252,7 @@ T& List<T>::get_element(int n) {
     Node *tmp = head;
     while (tmp != nullptr) {
         if (tmp->counter < n) {
-            n = n - tmp->counter;
+            n = n - tmp->get_amount();
             tmp = tmp->next;
         } else {
             return tmp->get_element(n);
@@ -267,7 +267,7 @@ bool List<T>::exist_element(int n) {
         Node *tmp = head;
         while (tmp != nullptr) {
             if (tmp->counter < n) {
-                n = n - tmp->counter;
+                n = n - tmp->get_amount();
                 tmp = tmp->next;
             } else {
                 return tmp->exist_element(n);

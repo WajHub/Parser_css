@@ -38,7 +38,7 @@ bool Section::contains_attribute(String name) {
         if(attributes.exist_element(i)){
             if(attributes.get_element(i).getName()==name) return true;
         }
-        else x++;
+//        else x++;
     }
     return false;
 }
@@ -48,7 +48,7 @@ bool Section::contains_selector(String name) {
         if(selectors.exist_element(i)){
             if(selectors.get_element(i).getName()==name) return true;
         }
-        else x++;
+//        else x++;
     }
     return false;
 }
@@ -62,7 +62,7 @@ String Section::attribute_value(String name) {
                     return attributes.get_element(i).getValue();
                 }
             }
-            else x++;
+//            else x++;
         }
         return String();
     }
@@ -73,7 +73,7 @@ int Section::count_attributes(String name) {
     int amount=0;
     int amount_attributes = attributes.get_amount();
     for(int i=1; i<=amount_attributes;i++){
-        if(!attributes.exist_element(i)) amount_attributes++;
+        if(!attributes.exist_element(i)) ;
         else if(attributes.get_element(i).getName()==name) amount++;
     }
     return amount;
@@ -83,7 +83,7 @@ int Section::count_selectors(String name) {
     int amount=0;
     int amount_selectors = selectors.get_amount();
     for(int i=1; i<=amount_selectors;i++){
-        if(!selectors.exist_element(i)) amount_selectors++;
+        if(!selectors.exist_element(i)) ;
         else if(selectors.get_element(i).getName()==name) amount++;
     }
     return amount;
@@ -118,7 +118,7 @@ int Section::index_attribute(String name) {
         if(attributes.exist_element(i)){
             if(attributes.get_element(i).getName()==name) return i;
         }
-        else x++;
+//        else x++;
     }
     return 0;
 }

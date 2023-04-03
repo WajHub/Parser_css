@@ -65,7 +65,7 @@ void input_string(char buff[LENGTH_BUFF],String &str, int &size){
     size=0;
 }
 
-void delete_dupplicate(Section &section, String &name){
+void delete_dupplicate_attr_in_section(Section &section, String &name){
     int index = section.index_attribute(name);
     if(index > 0){
         section.get_attributes().delete_element(index);
@@ -102,7 +102,7 @@ void load_data(char buff[LENGTH_BUFF],char ch,int &size,Selector &selector,Attri
         } else {
             input_string(buff, attribute.getValue(), size);
             switch_reading(reading,ch);
-            delete_dupplicate(section,attribute.getName());
+            delete_dupplicate_attr_in_section(section,attribute.getName());
             section.add_attribute(attribute);
         }
         if (ch == '}') {
@@ -132,7 +132,7 @@ int count_attributes(List<Section> &sections, String &name){
     int amount_sections = sections.get_amount();
     for(int j=1;j<=amount_sections;j++){
         if(sections.exist_element(j)) result=result + sections.get_element(j).count_attributes(name);
-        else amount_sections++;
+//        else amount_sections++;
     }
     return result;
 }
@@ -142,7 +142,7 @@ int count_selectors(List<Section> &sections, String &name){
     int amount_sections = sections.get_amount();
     for(int j=1;j<=amount_sections;j++){
         if(sections.exist_element(j)) result=result + sections.get_element(j).count_selectors(name);
-        else amount_sections++;
+//        else amount_sections++;
     }
     return result;
 }
@@ -160,7 +160,7 @@ String get_attr_for_sel(List<Section> &sections,String &name, String &name2){
                 }
             }
         }
-        else amount_sections++;
+//        else amount_sections++;
     }
     return result;
 }
@@ -199,6 +199,7 @@ int main() {
             }
             else if(ch=='?'){
                 cout<<"? == "<<sections.get_amount()<<endl;
+//                cout<<sections.get_element(9);
             }
             else if(ch >= '0' && ch <= '9'){
                 int i = load_int(buff,size,ch);
