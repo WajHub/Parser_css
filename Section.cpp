@@ -73,8 +73,7 @@ int Section::count_attributes(String name) {
     int amount=0;
     int amount_attributes = attributes.get_amount();
     for(int i=1; i<=amount_attributes;i++){
-        if(!attributes.exist_element(i)) ;
-        else if(attributes.get_element(i).getName()==name) amount++;
+        if(attributes.get_element(i).getName()==name) amount++;
     }
     return amount;
 }

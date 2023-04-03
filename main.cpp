@@ -69,6 +69,9 @@ void delete_dupplicate_attr_in_section(Section &section, String &name){
     int index = section.index_attribute(name);
     if(index > 0){
         section.get_attributes().delete_element(index);
+        if(section.get_attributes().isEmpty()){
+            section.get_attributes().get_element(index);
+        }
     }
 }
 
