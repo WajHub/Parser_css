@@ -132,7 +132,6 @@ int count_attributes(List<Section> &sections, String &name){
     int amount_sections = sections.get_amount();
     for(int j=1;j<=amount_sections;j++){
         if(sections.exist_element(j)) result=result + sections.get_element(j).count_attributes(name);
-//        else amount_sections++;
     }
     return result;
 }
@@ -197,6 +196,7 @@ int main() {
             }
             else if(ch=='?'){
                 cout<<"? == "<<sections.get_amount()<<endl;
+                cout<<sections;
             }
             else if(ch >= '0' && ch <= '9'){
                 int i = load_int(buff,size,ch);
@@ -254,15 +254,17 @@ int main() {
                     else{
                         name=String();
                         buff[size++]=ch;
-                        while(cin.get(ch) && ch!=',' && ch!='\n' && ch!='\0'){
+                        while(cin.get(ch) && ch!=',' && ch!='\n' && ch!='\0' && ch!=';'){
                             buff[size]=ch;
                             size++;
                         }
                         input_string(buff,name,size);
                         if(sections.exist_element(i)) {
                             if (sections.get_element(i).delete_attribute(name))
-                                cout << i << ",D," << name << " == deleted" << endl;
-                            if (sections.get_element(i).isEmpty()) sections.delete_element(i);
+                                cout << i << ",D," << name << "== deleted" << endl;
+                            if (sections.get_element(i).get_attributes().isEmpty()){
+                                sections.delete_element(i);
+                            }
                         }
                     }
                 }
