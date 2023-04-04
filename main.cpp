@@ -6,7 +6,7 @@
 #include "Section.h"
 #include "List.h"
 using namespace std;
-#define LENGTH_BUFF 10000
+#define LENGTH_BUFF 2000
 
 struct Reading{
     bool selectors=true;
@@ -69,12 +69,13 @@ void delete_dupplicate_attr_in_section(Section &section, String &name){
     int index = section.index_attribute(name);
     if(index > 0){
         section.get_attributes().delete_element(index);
-
     }
 }
 
-void load_data(char buff[LENGTH_BUFF],char ch,int &size,Selector &selector,Attribute &attribute,
-               Section &section, List<Section> &sections, Reading &reading){
+void load_data(char buff[LENGTH_BUFF],char ch,int &size, List<Section> &sections, Reading &reading){
+    Selector selector;
+    Attribute attribute;
+    Section section;
     if (reading.selectors && ch != '\n') {
         if (ch != '{' && ch != ',' && ch!=';') {
             buff[size++] = ch;
@@ -132,7 +133,7 @@ int count_attributes(List<Section> &sections, String &name){
     int result=0;
     int amount_sections = sections.get_amount();
     for(int j=1;j<=amount_sections;j++){
-        if(sections.exist_element(j)) result=result + sections.get_element(j).count_attributes(name);
+        result=result + sections.get_element(j).count_attributes(name);
     }
     return result;
 }
@@ -141,7 +142,7 @@ int count_selectors(List<Section> &sections, String &name){
     int result=0;
     int amount_sections = sections.get_amount();
     for(int j=1;j<=amount_sections;j++){
-        if(sections.exist_element(j)) result=result + sections.get_element(j).count_selectors(name);
+        result=result + sections.get_element(j).count_selectors(name);
     }
     return result;
 }
@@ -163,23 +164,127 @@ String get_attr_for_sel(List<Section> &sections,String &name, String &name2){
     return result;
 }
 
+void command_delete(List<Section> &sections,char buff[LENGTH_BUFF],int &size, char &ch, int &i){
+    String name;
+    cin.get(ch);
+    cin.get(ch);
+    if(ch=='*'){
+        if(sections.exist_element(i)){
+            sections.get_element(i).get_selectors().delete_all();
+            sections.get_element(i).get_attributes().delete_all();
+            if(sections.delete_element(i)) cout<<i<<",D,* == deleted"<<endl;
+        }
+    }
+    else{
+        name=String();
+        buff[size++]=ch;
+        while(cin.get(ch) && ch!=',' && ch!='\n' && ch!='\0' && ch!=';'){
+            buff[size]=ch;
+            size++;
+        }
+        input_string(buff,name,size);
+        if(sections.exist_element(i)) {
+            if (sections.get_element(i).delete_attribute(name)) {
+                cout << i << ",D," << name << " == deleted" << endl;
+            }
+            if (sections.get_element(i).get_attributes().isEmpty()){
+                sections.delete_element(i);
+            }
 
+        }
+    }
+}
+
+void command_count_i_A(List<Section> &sections,char buff[LENGTH_BUFF],int &size, char &ch, int &i){
+    String name;
+    cin.get(ch);
+    cin.get(ch);
+    if(ch=='?') {
+        if (sections.exist_element(i)) {
+            cout<<i << ",A,? == " << sections.get_element(i).get_attributes().get_amount() << endl;
+        }
+    }
+    else{
+        name=String();
+        buff[size++]=ch;
+        while(cin.get(ch) && ch!='\0' && ch!='\n'){
+            buff[size]=ch;
+            size++;
+        }
+        input_string(buff,name,size);
+        if(sections.exist_element(i)){
+            if(sections.get_element(i).contains_attribute(name)){
+                cout<<i<<",A,"<<name<<" == "<<sections.get_element(i).attribute_value(name)<<endl;
+            }
+        }
+    }
+}
+
+void command_count_i_S(List<Section> &sections,char buff[LENGTH_BUFF],int &size, char &ch, int &i){
+    String name;
+    cin.get(ch);
+    cin.get(ch);
+    if(ch=='?') {
+        if (sections.exist_element(i)) {
+            cout<<i << ",S,? == " << sections.get_element(i).get_selectors().get_amount() << endl;
+        }
+    }
+    else{
+        int j = load_int(buff,size,ch);
+        if(sections.exist_element(i)){
+            if(sections.get_element(i).get_selectors().exist_element(j)){
+                cout<<i<<",S,"<<j<<" == "<<sections.get_element(i).get_selectors().get_element(j)<<endl;
+            }
+        }
+    }
+}
+
+void command_name(List<Section> &sections,char buff[LENGTH_BUFF],int &size, char &ch){
+    String answer;
+    String name;
+    String name2;
+    buff[size++]=ch;
+    while(cin.get(ch) && ch!=','){
+        buff[size]=ch;
+        size++;
+    }
+    input_string(buff,name,size);
+    cin.get(ch);
+    if(ch=='A'){
+        cin.get(ch);
+        cin.get(ch);
+        cout<<name<<",A,? == "<<count_attributes(sections,name)<<endl;
+    }
+    else if(ch=='S'){
+        cin.get(ch);
+        cin.get(ch);
+        cout<<name<<",S,? == "<<count_selectors(sections,name)<<endl;
+    }
+    else if(ch=='E'){
+        name2=String();
+        cin.get(ch);
+        while(cin.get(ch) && ch!='\n'){
+            buff[size]=ch;
+            size++;
+        }
+        input_string(buff,name2,size);
+        answer = get_attr_for_sel(sections,name,name2);
+        if(!answer.isEmpty()) cout<<name<<",E,"<<name2<<" == "<<answer<<endl;
+    }
+    else{
+        while(cin.get(ch) && ch!='?');
+    }
+}
 
 int main() {
-
     freopen("input.txt", "r", stdin);
     char buff [LENGTH_BUFF];
     memset(buff, '\0', sizeof(buff));
     int size=0;
     Reading reading;
     List<Section> sections;
-    Selector selector;
-    Attribute attribute;
-    Section section;
-    String name;
-    String name2;
-    String answer;
     char ch=' ';
+
     while(cin.get(ch) && ch!=EOF){
         if(reading.css && ch>=' ') {
             if(ch=='?'){
@@ -187,7 +292,7 @@ int main() {
                 reading.commands=true;
                 for(int i=0;i<3;i++) cin.get(ch);
             }
-            else load_data(buff,ch,size,selector,attribute,section,sections, reading);
+            else load_data(buff,ch,size,sections, reading);
         }
         else if(ch>=' '){
             if(ch=='*'){
@@ -197,79 +302,18 @@ int main() {
             }
             else if(ch=='?'){
                 cout<<"? == "<<sections.get_amount()<<endl;
-//                cout<<sections;
             }
             else if(ch >= '0' && ch <= '9'){
                 int i = load_int(buff,size,ch);
                 cin.get(ch);
                 if(ch=='S'){
-                    cin.get(ch);
-                    cin.get(ch);
-                    if(ch=='?') {
-                        if (sections.exist_element(i)) {
-                            cout<<i << ",S,? == " << sections.get_element(i).get_selectors().get_amount() << endl;
-                        }
-                    }
-                    else{
-                        int j = load_int(buff,size,ch);
-                        if(sections.exist_element(i)){
-                            if(sections.get_element(i).get_selectors().exist_element(j)){
-                                cout<<i<<",S,"<<j<<" == "<<sections.get_element(i).get_selectors().get_element(j)<<endl;
-                            }
-                        }
-                    }
+                    command_count_i_S(sections,buff,size,ch,i);
                 }
                 else if(ch=='A'){
-                    cin.get(ch);
-                    cin.get(ch);
-                    if(ch=='?') {
-                        if (sections.exist_element(i)) {
-                            cout<<i << ",A,? == " << sections.get_element(i).get_attributes().get_amount() << endl;
-                        }
-                    }
-                    else{
-                        name=String();
-                        buff[size++]=ch;
-                        while(cin.get(ch) && ch!='\0' && ch!='\n'){
-                            buff[size]=ch;
-                            size++;
-                        }
-                        input_string(buff,name,size);
-                        if(sections.exist_element(i)){
-                            if(sections.get_element(i).contains_attribute(name)){
-                                cout<<i<<",A,"<<name<<" == "<<sections.get_element(i).attribute_value(name)<<endl;
-                            }
-                        }
-                    }
+                    command_count_i_A(sections,buff,size,ch,i);
                 }
                 else if(ch=='D'){
-                    cin.get(ch);
-                    cin.get(ch);
-                    if(ch=='*'){
-                        if(sections.exist_element(i)){
-                            sections.get_element(i).get_selectors().delete_all();
-                            sections.get_element(i).get_attributes().delete_all();
-                            if(sections.delete_element(i)) cout<<i<<",D,* == deleted"<<endl;
-                        }
-                    }
-                    else{
-                        name=String();
-                        buff[size++]=ch;
-                        while(cin.get(ch) && ch!=',' && ch!='\n' && ch!='\0' && ch!=';'){
-                            buff[size]=ch;
-                            size++;
-                        }
-                        input_string(buff,name,size);
-                        if(sections.exist_element(i)) {
-                            if (sections.get_element(i).delete_attribute(name)) {
-                                cout << i << ",D," << name << " == deleted" << endl;
-                            }
-                            if (sections.get_element(i).get_attributes().isEmpty()){
-                                sections.delete_element(i);
-                            }
-
-                        }
-                    }
+                    command_delete(sections,buff,size,ch,i);
                 }
                 else if(ch=='s'){
                     cin.get(ch);
@@ -277,41 +321,9 @@ int main() {
                 }
             }
             else if(ch!='\n' && ch!='\0' && ch!=' '){
-                name=String();
-                buff[size++]=ch;
-                while(cin.get(ch) && ch!=','){
-                    buff[size]=ch;
-                    size++;
-                }
-                input_string(buff,name,size);
-                cin.get(ch);
-                if(ch=='A'){
-                    cin.get(ch);
-                    cin.get(ch);
-                    cout<<name<<",A,? == "<<count_attributes(sections,name)<<endl;
-                }
-                else if(ch=='S'){
-                    cin.get(ch);
-                    cin.get(ch);
-                    cout<<name<<",S,? == "<<count_selectors(sections,name)<<endl;
-                }
-                else if(ch=='E'){
-                    name2=String();
-                    cin.get(ch);
-                    while(cin.get(ch) && ch!='\n'){
-                        buff[size]=ch;
-                        size++;
-                    }
-                    input_string(buff,name2,size);
-                    answer = get_attr_for_sel(sections,name,name2);
-                    if(!answer.isEmpty()) cout<<name<<",E,"<<name2<<" == "<<answer<<endl;
-                }
-                else{
-                    while(cin.get(ch) && ch!='?');
-                }
+                command_name(sections,buff,size,ch);
             }
         }
     }
-//    cout<<sections;
     return 0;
 }

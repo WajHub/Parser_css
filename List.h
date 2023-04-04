@@ -211,8 +211,9 @@ bool List<T>::delete_element(int n) {
     bool result=false;
     Node *tmp = head;
     while (tmp != nullptr) {
-        if (tmp->get_amount() < n) {
-            n = n - tmp->get_amount();
+        int x = tmp->get_amount();
+        if (x < n) {
+            n = n - x;
             tmp = tmp->next;
         } else {
             result = tmp->delete_element(n);
@@ -240,8 +241,9 @@ bool List<T>::exist_element_(int n) {
     if (tail != nullptr) {
         Node *tmp = tail;
         while (tmp != nullptr) {
-            if (tmp->counter < n) {
-                n = n - tmp->counter;
+            int x = tmp->counter;
+            if ( x< n) {
+                n = n - x;
                 tmp = tmp->prev;
             } else {
                 return tmp->exist_element_(n);
@@ -256,8 +258,9 @@ template<typename T>
 T &List<T>::get_element_(int n) {
     Node *tmp = tail;
     while (tmp != nullptr) {
-        if (tmp->counter < n) {
-            n = n - tmp->counter;
+        int x = tmp->counter;
+        if (x < n) {
+            n = n - x;
             tmp = tmp->prev;
         } else {
             return tmp->get_element_(n);
@@ -271,8 +274,9 @@ template<typename T>
 T& List<T>::get_element(int n) {
     Node *tmp = head;
     while (tmp != nullptr) {
-        if (tmp->get_amount() < n) {
-            n = n - tmp->get_amount();
+        int x = tmp->get_amount();
+        if (x< n) {
+            n = n - x;
             tmp = tmp->next;
         } else {
             return tmp->get_element(n);
@@ -286,8 +290,9 @@ bool List<T>::exist_element(int n) {
     if (head != nullptr) {
         Node *tmp = head;
         while (tmp != nullptr) {
-            if (tmp->get_amount()< n) {
-                n = n - tmp->get_amount();
+            int x = tmp->get_amount();
+            if (x< n) {
+                n = n - x;
                 tmp = tmp->next;
             } else {
                 return tmp->exist_element(n);
