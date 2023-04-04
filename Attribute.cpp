@@ -31,7 +31,7 @@ bool Attribute::isEmpty() {
     return false;
 }
 
-bool Attribute::contains_name(String name) {
+bool Attribute::contains_name(String &name) {
     if(name==this->name) return true;
     return false;
 }

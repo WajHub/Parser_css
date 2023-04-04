@@ -3,10 +3,10 @@
 #include "String.h"
 #include "Selector.h"
 #include "Attribute.h"
-#include "List.h"
 #include "Section.h"
+#include "List.h"
 using namespace std;
-#define LENGTH_BUFF 256
+#define LENGTH_BUFF 10000
 
 struct Reading{
     bool selectors=true;
@@ -69,6 +69,7 @@ void delete_dupplicate_attr_in_section(Section &section, String &name){
     int index = section.index_attribute(name);
     if(index > 0){
         section.get_attributes().delete_element(index);
+
     }
 }
 
@@ -196,7 +197,7 @@ int main() {
             }
             else if(ch=='?'){
                 cout<<"? == "<<sections.get_amount()<<endl;
-                cout<<sections;
+//                cout<<sections;
             }
             else if(ch >= '0' && ch <= '9'){
                 int i = load_int(buff,size,ch);
@@ -260,11 +261,13 @@ int main() {
                         }
                         input_string(buff,name,size);
                         if(sections.exist_element(i)) {
-                            if (sections.get_element(i).delete_attribute(name))
-                                cout << i << ",D," << name << "== deleted" << endl;
+                            if (sections.get_element(i).delete_attribute(name)) {
+                                cout << i << ",D," << name << " == deleted" << endl;
+                            }
                             if (sections.get_element(i).get_attributes().isEmpty()){
                                 sections.delete_element(i);
                             }
+
                         }
                     }
                 }

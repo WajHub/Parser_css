@@ -8,7 +8,7 @@
 #ifndef PARSER_CSS_LIST_H
 #define PARSER_CSS_LIST_H
 
-#define LENGTH  8
+#define LENGTH  2
 
 template<typename T>
 class List {
@@ -131,7 +131,6 @@ private:
             return false;
         }
         ~Node() {
-
         }
     };
     Node *head;
@@ -163,6 +162,8 @@ public:
         return tail;
     }
 
+    void delete_node(Node *tmp);
+
     int get_amount();
 
     bool isEmpty();
@@ -178,6 +179,21 @@ public:
     ~List();
 };
 
+template<typename T>
+void List<T>::delete_node(Node *tmp) {
+    if (head != nullptr && tmp != nullptr) {
+        if (head == tmp) {
+            head = tmp->next;
+        }
+        if (tmp->next != nullptr) {
+            tmp->next->prev = tmp->prev;
+        }
+        if (tmp->prev != nullptr) {
+            tmp->prev->next = tmp->next;
+        }
+    }
+}
+
 
 template<typename T>
 void List<T>::delete_all() {
@@ -187,6 +203,7 @@ void List<T>::delete_all() {
         delete head;
         head = next;
     }
+    tail= nullptr;
 }
 
 template<typename T>
@@ -199,6 +216,9 @@ bool List<T>::delete_element(int n) {
             tmp = tmp->next;
         } else {
             result = tmp->delete_element(n);
+            if(tmp->isEmpty()){
+                delete_node(tmp);
+            }
             return result;
         }
     }
@@ -209,8 +229,8 @@ template<typename T>
 bool List<T>::isEmpty() {
     Node *tmp=head;
     while(tmp!= nullptr){
-        if(tmp->isEmpty())return true;
-        return false;
+        if(tmp->isEmpty()) tmp=tmp->next;
+        else return false;
     }
     return true;
 }

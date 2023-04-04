@@ -9,11 +9,11 @@ Section::Section() {
     List<Attribute> attributes=List<Attribute>();
 }
 
-void Section::add_selector(Selector selector) {
+void Section::add_selector(Selector &selector) {
     selectors.push(selector);
 }
 
-void Section::add_attribute(Attribute attribute) {
+void Section::add_attribute(Attribute&attribute) {
     attributes.push(attribute);
 }
 
@@ -32,7 +32,7 @@ List<Attribute>& Section::get_attributes() {
     return attributes;
 }
 
-bool Section::contains_attribute(String name) {
+bool Section::contains_attribute(String &name) {
     int x=attributes.get_amount();
     for(int i=1;i<=x;i++){
         if(attributes.exist_element(i)){
@@ -41,7 +41,7 @@ bool Section::contains_attribute(String name) {
     }
     return false;
 }
-bool Section::contains_selector(String name) {
+bool Section::contains_selector(String &name) {
     int x=selectors.get_amount();
     for(int i=1;i<=x;i++){
         if(selectors.exist_element(i)){
@@ -51,7 +51,7 @@ bool Section::contains_selector(String name) {
     return false;
 }
 
-String Section::attribute_value(String name) {
+String Section::attribute_value(String &name) {
     if(contains_attribute(name)){
         int x=attributes.get_amount();
         for(int i=1;i<=x;i++){
@@ -66,7 +66,7 @@ String Section::attribute_value(String name) {
     return String();
 }
 
-int Section::count_attributes(String name) {
+int Section::count_attributes(String &name) {
     int amount=0;
     int amount_attributes = attributes.get_amount();
     for(int i=1; i<=amount_attributes;i++){
@@ -77,7 +77,7 @@ int Section::count_attributes(String name) {
     return amount;
 }
 
-int Section::count_selectors(String name) {
+int Section::count_selectors(String &name) {
     int amount=0;
     int amount_selectors = selectors.get_amount();
     for(int i=1; i<=amount_selectors;i++){
@@ -96,7 +96,7 @@ bool Section::isEmpty() {
     return false;
 }
 
-bool Section::delete_attribute(String name) {
+bool Section::delete_attribute(String &name) {
     int x=attributes.get_amount();
     for(int i=1;i<=x;i++){
         if(attributes.exist_element(i)){
@@ -110,7 +110,7 @@ bool Section::delete_attribute(String name) {
     return false;
 }
 
-int Section::index_attribute(String name) {
+int Section::index_attribute(String &name) {
     int x=attributes.get_amount();
     for(int i=1;i<=x;i++){
         if(attributes.exist_element(i)){
