@@ -91,11 +91,6 @@ Section::~Section() {
 
 }
 
-bool Section::isEmpty() {
-    if( attributes.isEmpty()) return true;
-    return false;
-}
-
 bool Section::delete_attribute(String &name) {
     int x=attributes.get_amount();
     for(int i=1;i<=x;i++){

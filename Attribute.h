@@ -14,8 +14,6 @@ public:
     Attribute();
     String& getName();
     String& getValue();
-    bool isEmpty();
-    bool contains_name(String &name);
     friend std::ostream& operator<<(std::ostream& out, const Attribute& attribute);
     ~Attribute();
 };

@@ -14,10 +14,8 @@ private:
     char *array;
 public:
     String();
-//    String(char *buff,int size);
     String(const String &other);
     void inputString(char buff[LENGTH_BUFF], int size);
-    char *getArray() const;
     int getSize() const;
     bool operator==(const String& other) const;
     bool isEmpty();

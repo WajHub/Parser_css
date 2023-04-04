@@ -26,16 +26,6 @@ Attribute::~Attribute() {
 
 }
 
-bool Attribute::isEmpty() {
-    if(name.isEmpty() && value.isEmpty()) return true;
-    return false;
-}
-
-bool Attribute::contains_name(String &name) {
-    if(name==this->name) return true;
-    return false;
-}
-
 
 
 

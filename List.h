@@ -149,15 +149,6 @@ public:
         }
         return out;
     }
-
-    Node *getHead() const {
-        return head;
-    }
-
-    Node *getTail() const {
-        return tail;
-    }
-
     void delete_node(Node *tmp);
 
     int get_amount();
@@ -170,7 +161,6 @@ public:
     //funckja pobiera elementy od konca (dla komendy E)
     T& get_element_(int n);
     bool exist_element_(int n);
-
 
     ~List();
 };

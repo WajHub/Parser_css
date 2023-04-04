@@ -39,10 +39,6 @@ void String::inputString(char buff[LENGTH_BUFF], int size) {
     array[this->size-1]='\0';
 }
 
-char *String::getArray() const {
-    return array;
-}
-
 int String::getSize() const {
     return size;
 }
