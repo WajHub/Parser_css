@@ -292,7 +292,7 @@ bool List<T>::exist_element(int n) {
         while (tmp != nullptr) {
             int x = tmp->get_amount();
             if (x< n) {
-                n = n - x;
+                n = n - tmp->get_amount();
                 tmp = tmp->next;
             } else {
                 return tmp->exist_element(n);

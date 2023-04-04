@@ -72,10 +72,8 @@ void delete_dupplicate_attr_in_section(Section &section, String &name){
     }
 }
 
-void load_data(char buff[LENGTH_BUFF],char ch,int &size, List<Section> &sections, Reading &reading){
-    Selector selector;
-    Attribute attribute;
-    Section section;
+void load_data(char buff[LENGTH_BUFF],char ch,int &size, List<Section> &sections,Section& section,
+               Attribute &attribute, Selector &selector,Reading &reading){
     if (reading.selectors && ch != '\n') {
         if (ch != '{' && ch != ',' && ch!=';') {
             buff[size++] = ch;
@@ -283,6 +281,9 @@ int main() {
     int size=0;
     Reading reading;
     List<Section> sections;
+    Selector selector;
+    Attribute attribute;
+    Section section;
     char ch=' ';
 
     while(cin.get(ch) && ch!=EOF){
@@ -292,7 +293,7 @@ int main() {
                 reading.commands=true;
                 for(int i=0;i<3;i++) cin.get(ch);
             }
-            else load_data(buff,ch,size,sections, reading);
+            else load_data(buff,ch,size,sections,section,attribute,selector, reading);
         }
         else if(ch>=' '){
             if(ch=='*'){
