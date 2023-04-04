@@ -82,7 +82,7 @@ void load_data(char buff[LENGTH_BUFF],char ch,int &size,Selector &selector,Attri
             if(ch==';') memset(buff, '\0', LENGTH_BUFF);
             input_string(buff, selector.getName(), size);
             switch_reading(reading,ch);
-            if(!selector.isEmpty()) section.add_selector(selector);
+            if(!selector.isEmpty() && !section.contains_selector(selector.getName())) section.add_selector(selector);
         }
     } else if (reading.attribute_name && ch != '\n') {
         if (ch != ':' && ch != '}') {
@@ -271,6 +271,10 @@ int main() {
                         }
                     }
                 }
+                else if(ch=='s'){
+                    cin.get(ch);
+                    cin.get(ch);
+                }
             }
             else if(ch!='\n' && ch!='\0' && ch!=' '){
                 name=String();
@@ -301,6 +305,9 @@ int main() {
                     input_string(buff,name2,size);
                     answer = get_attr_for_sel(sections,name,name2);
                     if(!answer.isEmpty()) cout<<name<<",E,"<<name2<<" == "<<answer<<endl;
+                }
+                else{
+                    while(cin.get(ch) && ch!='?');
                 }
             }
         }

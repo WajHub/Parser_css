@@ -8,7 +8,7 @@
 #ifndef PARSER_CSS_LIST_H
 #define PARSER_CSS_LIST_H
 
-#define LENGTH  2
+#define LENGTH  8
 
 template<typename T>
 class List {
