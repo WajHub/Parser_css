@@ -129,18 +129,24 @@ int load_int(char buff[LENGTH_BUFF],int &size, char ch){
 
 int count_attributes(List<Section> &sections, String &name){
     int result=0;
-    int amount_sections = sections.get_amount();
-    for(int j=1;j<=amount_sections;j++){
-        result=result + sections.get_element(j).count_attributes(name);
+    List<Section>::Node *tmp = sections.head;
+    while(tmp != nullptr){
+        for(Section & element : tmp->array){
+            result=result+element.count_attributes(name);
+        }
+        tmp=tmp->next;
     }
     return result;
 }
 
 int count_selectors(List<Section> &sections, String &name){
     int result=0;
-    int amount_sections = sections.get_amount();
-    for(int j=1;j<=amount_sections;j++){
-        result=result + sections.get_element(j).count_selectors(name);
+    List<Section>::Node *tmp = sections.head;
+    while(tmp!= nullptr){
+        for(Section & element : tmp->array){
+            result=result+element.count_selectors(name);
+        }
+        tmp=tmp->next;
     }
     return result;
 }

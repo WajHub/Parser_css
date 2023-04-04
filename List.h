@@ -12,7 +12,7 @@
 
 template<typename T>
 class List {
-private:
+public:
     class Node {
     public:
         T array[LENGTH];
@@ -20,7 +20,6 @@ private:
         int counter;
         Node *next;
         Node *prev;
-
         Node() {
             counter = 0;
             array[counter++] = T();
@@ -44,9 +43,6 @@ private:
         }
         int getCounter() {
             return counter;
-        }
-        const T *getArray() const {
-            return array;
         }
         int get_amount() {
             int z = 0;
